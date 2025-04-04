@@ -1,0 +1,44 @@
+inputs_def:
+  - handle: 输入文件路径
+    description: Input
+    json_schema:
+      type: string
+      ui:widget: file
+    nullable: false
+  - handle: 输出文件路径
+    json_schema:
+      type: string
+      ui:widget: save
+  - handle: 源文语言
+    json_schema:
+      type: string
+    value: 英文
+  - handle: 目标语言
+    json_schema:
+      type: string
+    value: 中文
+  - handle: AI_Bash
+    json_schema:
+      type: string
+    value: http://192.168.8.100:8000/v1
+  - handle: AI_Key
+    json_schema:
+      type: string
+    value: "123456"
+  - handle: AI_Model
+    json_schema:
+      type: string
+    value: gemma-2-27b-it
+outputs_def:
+  - handle: 输出文件
+    json_schema:
+      type: string
+      ui:widget: save
+ui:
+  default_width: 450
+executor:
+  name: nodejs
+  options:
+    spawn: false
+    entry: main.ts
+icon: ":skill-icons:typescript:"

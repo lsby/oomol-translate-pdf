@@ -1,0 +1,26 @@
+inputs_def:
+  - handle: 文件路径
+    description: Input
+    json_schema:
+      type: string
+  - handle: 增加后缀文本
+    json_schema:
+      type: string
+  - handle: 重定义后缀名
+    json_schema:
+      type: string
+    nullable: true
+outputs_def:
+  - handle: 新文件路径
+    description: Output
+    json_schema:
+      type: string
+ui:
+  default_width: 450
+executor:
+  name: nodejs
+  options:
+    spawn: false
+    entry: main.ts
+icon: ":skill-icons:typescript:"
+additional_inputs: false

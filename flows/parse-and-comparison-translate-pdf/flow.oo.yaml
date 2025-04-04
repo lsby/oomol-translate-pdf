@@ -1,0 +1,87 @@
+nodes:
+  - node_id: +value#3
+    node_type: value_node
+    title: "Value #1"
+    values:
+      - handle: 选择的文件
+        json_schema:
+          type: string
+          ui:widget: file
+  - node_id: +value#4
+    node_type: value_node
+    title: "Value #2"
+    values:
+      - handle: 模型文件夹
+        json_schema:
+          type: string
+          ui:widget: dir
+        value: /oomol-driver/oomol-storage/pdf-craft-model
+  - node_id: pdf-to-markdown#1
+    node_type: task_node
+    title: "PDF to Markdown #1"
+    inputs_from:
+      - handle: pdf
+        value: /oomol-driver/oomol-storage/pdf翻译/AI-native Memory.pdf
+        from_node:
+          - node_id: +value#3
+            output_handle: 选择的文件
+      - handle: device
+        value: cuda
+      - handle: model_dir
+        value: /oomol-driver/oomol-storage/pdf-craft-model
+        from_node:
+          - node_id: +value#4
+            output_handle: 模型文件夹
+      - handle: output_file
+        value: /oomol-driver/oomol-storage/pdf-output/AI-native Memory/pdf-out.md
+        from_node:
+          - node_id: 生成同目录新路径#1
+            output_handle: 新文件路径
+      - handle: assets_dir_name
+        value: images
+    task: pdf-craft::pdf-to-markdown
+  - node_id: 生成同目录新路径#1
+    node_type: task_node
+    inputs_from:
+      - handle: 文件路径
+        from_node:
+          - node_id: +value#3
+            output_handle: 选择的文件
+      - handle: 增加后缀文本
+        value: 解析
+      - handle: 重定义后缀名
+        value: md
+    task: self::生成同目录新路径
+  - node_id: 生成同目录新路径#2
+    node_type: task_node
+    inputs_from:
+      - handle: 文件路径
+        from_node:
+          - node_id: +value#3
+            output_handle: 选择的文件
+      - handle: 增加后缀文本
+        value: 翻译
+      - handle: 重定义后缀名
+        value: md
+    task: self::生成同目录新路径
+  - task: self::翻译-带原文
+    node_id: 翻译-带原文#1
+    inputs_from:
+      - handle: 输入文件路径
+        from_node:
+          - node_id: pdf-to-markdown#1
+            output_handle: output_file
+      - handle: 输出文件路径
+        from_node:
+          - node_id: 生成同目录新路径#2
+            output_handle: 新文件路径
+      - handle: 源文语言
+        value: 英文
+      - handle: 目标语言
+        value: 中文
+      - handle: AI_Bash
+        value: http://192.168.8.100:8000/v1
+      - handle: AI_Key
+        value: "123456"
+      - handle: AI_Model
+        value: gemma-2-27b-it

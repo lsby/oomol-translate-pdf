@@ -1,0 +1,15 @@
+version: 0.0.1
+scripts:
+  # Script executed when the container is first loaded
+  # eg: bootstrap: pip install pandas
+  bootstrap: |
+    npm install
+    pip install -r requirements.txt
+dependencies:
+  pdf-craft: 0.0.7
+name: "@lsby/translate-pdf"
+displayName: translate-pdf
+description: 使用AI将pdf翻译为指定语言
+releaseType: project
+repository: https://github.com/lsby/oomol-translate-pdf
+releaseNotes: start

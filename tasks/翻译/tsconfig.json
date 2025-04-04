@@ -1,0 +1,10 @@
+{
+  "extends": "@oomol/types/tsconfig.oomol.json",
+  "compilerOptions": {
+    "paths": {
+      "~/*": [
+        "../../*"
+      ]
+    }
+  }
+}
