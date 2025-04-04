@@ -4,7 +4,6 @@ nodes:
     node_id: pdf-to-markdown#1
     inputs_from:
       - handle: pdf
-        value: /oomol-driver/oomol-storage/pdf翻译/AI-native Memory.pdf
         from_node:
           - node_id: +value#2
             output_handle: 选择的文件
@@ -12,11 +11,8 @@ nodes:
         value: cuda
       - handle: model_dir
         value: /oomol-driver/oomol-storage/pdf-craft-model
-        from_node:
-          - node_id: +value#3
-            output_handle: 模型文件夹
+        from_node: []
       - handle: output_file
-        value: /oomol-driver/oomol-storage/pdf-output/AI-native Memory/pdf-out.md
         from_node:
           - node_id: 生成同目录新路径#2
             output_handle: 新文件路径
@@ -26,12 +22,10 @@ nodes:
     node_id: 翻译#2
     inputs_from:
       - handle: 输入文件路径
-        value: /oomol-driver/oomol-storage/pdf-output/给程序员的范畴论/拆分1/拆分1.md
         from_node:
           - node_id: pdf-to-markdown#1
             output_handle: output_file
       - handle: 输出文件路径
-        value: /oomol-driver/oomol-storage/测试.md
         from_node:
           - node_id: 生成同目录新路径#1
             output_handle: 新文件路径
@@ -74,11 +68,3 @@ nodes:
         value: 解析
       - handle: 重定义后缀名
         value: md
-  - values:
-      - handle: 模型文件夹
-        json_schema:
-          type: string
-          ui:widget: dir
-        value: /oomol-driver/oomol-storage/pdf-craft-model
-    title: "Value #3"
-    node_id: +value#3

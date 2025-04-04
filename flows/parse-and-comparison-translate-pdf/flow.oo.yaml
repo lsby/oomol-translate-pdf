@@ -7,21 +7,11 @@ nodes:
         json_schema:
           type: string
           ui:widget: file
-  - node_id: +value#4
-    node_type: value_node
-    title: "Value #2"
-    values:
-      - handle: 模型文件夹
-        json_schema:
-          type: string
-          ui:widget: dir
-        value: /oomol-driver/oomol-storage/pdf-craft-model
   - node_id: pdf-to-markdown#1
     node_type: task_node
     title: "PDF to Markdown #1"
     inputs_from:
       - handle: pdf
-        value: /oomol-driver/oomol-storage/pdf翻译/AI-native Memory.pdf
         from_node:
           - node_id: +value#3
             output_handle: 选择的文件
@@ -30,10 +20,8 @@ nodes:
       - handle: model_dir
         value: /oomol-driver/oomol-storage/pdf-craft-model
         from_node:
-          - node_id: +value#4
-            output_handle: 模型文件夹
+          []
       - handle: output_file
-        value: /oomol-driver/oomol-storage/pdf-output/AI-native Memory/pdf-out.md
         from_node:
           - node_id: 生成同目录新路径#1
             output_handle: 新文件路径

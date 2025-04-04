@@ -9,15 +9,6 @@
         }
       }
     },
-    "+value#4": {
-      "contentWidth": 415,
-      "rfNode": {
-        "position": {
-          "x": -98.64278722646907,
-          "y": -162.37097128543115
-        }
-      }
-    },
     "pdf-to-markdown#1": {
       "contentWidth": 456.2563288935522,
       "rfNode": {

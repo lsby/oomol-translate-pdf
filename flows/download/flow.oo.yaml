@@ -1,0 +1,108 @@
+nodes:
+  - values:
+      - handle: pdf地址
+        json_schema:
+          type: string
+    title: "Value #2"
+    node_id: +value#2
+  - node_id: pdf-to-markdown#1
+    node_type: task_node
+    title: "PDF to Markdown #1"
+    inputs_from:
+      - handle: pdf
+        from_node:
+          - node_id: 下载文件#3
+            output_handle: file_path
+      - handle: device
+        value: cuda
+      - handle: model_dir
+        value: /oomol-driver/oomol-storage/pdf-craft-model
+        from_node:
+          []
+      - handle: output_file
+        from_node:
+          - node_id: 计算解析文件路径
+            output_handle: 新文件路径
+      - handle: assets_dir_name
+        value: images
+    task: pdf-craft::pdf-to-markdown
+  - node_id: 翻译-带原文#1
+    node_type: task_node
+    inputs_from:
+      - handle: 输入文件路径
+        from_node:
+          - node_id: pdf-to-markdown#1
+            output_handle: output_file
+      - handle: 输出文件路径
+        from_node:
+          - node_id: 计算翻译文件路径
+            output_handle: 新文件路径
+      - handle: 源文语言
+        value: 英文
+      - handle: 目标语言
+        value: 中文
+      - handle: AI_Bash
+        value: http://192.168.8.100:8000/v1
+      - handle: AI_Key
+        value: "123456"
+      - handle: AI_Model
+        value: gemma-2-27b-it
+    task: self::翻译-带原文
+  - node_id: 计算解析文件路径
+    node_type: task_node
+    inputs_from:
+      - handle: 文件路径
+        from_node:
+          - node_id: 下载文件#3
+            output_handle: file_path
+      - handle: 增加后缀文本
+        value: 解析
+      - handle: 重定义后缀名
+        value: md
+    task: self::生成同目录新路径
+  - node_id: 计算翻译文件路径
+    node_type: task_node
+    inputs_from:
+      - handle: 文件路径
+        from_node:
+          - node_id: 下载文件#3
+            output_handle: file_path
+      - handle: 增加后缀文本
+        value: 翻译
+      - handle: 重定义后缀名
+        value: md
+    task: self::生成同目录新路径
+  - task: self::下载文件
+    node_id: 下载文件#3
+    inputs_from:
+      - handle: url
+        from_node:
+          - node_id: +value#2
+            output_handle: pdf地址
+      - handle: query
+        value:
+          {}
+      - handle: headers
+        value:
+          {}
+      - handle: timeout
+        value: 0
+      - handle: retry_times
+        value: 1
+      - handle: save_path
+        from_node:
+          - node_id: 生成下载路径#1
+            output_handle: 下载路径
+  - task: self::生成下载路径
+    node_id: 生成下载路径#1
+    inputs_from:
+      - handle: 工作路径
+        value: /oomol-driver/oomol-storage/pdf
+        from_node:
+          []
+      - handle: 下载地址
+        from_node:
+          - node_id: +value#2
+            output_handle: pdf地址
+      - handle: 后缀名
+        value: pdf

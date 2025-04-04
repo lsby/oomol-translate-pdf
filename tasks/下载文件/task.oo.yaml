@@ -1,0 +1,50 @@
+inputs_def:
+  - handle: url
+    description: Input
+    json_schema:
+      type: string
+  - handle: query
+    json_schema:
+      type: object
+      additionalProperties:
+        type: string
+    value:
+      {}
+    nullable: false
+  - handle: headers
+    json_schema:
+      type: object
+      additionalProperties:
+        type: string
+    value:
+      {}
+    nullable: false
+  - handle: timeout
+    json_schema:
+      type: integer
+      minimum: 0
+    value: 0
+    nullable: false
+  - handle: retry_times
+    json_schema:
+      type: integer
+      minimum: 1
+    value: 1
+    nullable: false
+  - handle: save_path
+    json_schema:
+      type: string
+    nullable: false
+outputs_def:
+  - handle: file_path
+    description: Output
+    json_schema:
+      type: string
+ui:
+  default_width: 450
+executor:
+  name: nodejs
+  options:
+    spawn: false
+    entry: main.ts
+icon: ":skill-icons:typescript:"
